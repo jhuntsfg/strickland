@@ -36,7 +36,7 @@ export default function Sidebar({
               src="/logo.png"
               alt={AGENCY.name}
               fill
-              className="object-contain object-left"
+              className="object-contain object-left invert"
               onError={(e) => {
                 (e.target as HTMLImageElement).style.display = "none";
               }}

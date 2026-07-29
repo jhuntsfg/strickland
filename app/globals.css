@@ -10,13 +10,15 @@
   --color-foreground: var(--foreground);
 
   /* ─── AGENCY BRAND COLORS — update these for each new agency ─── */
-  --color-primary: #637777;        /* main color: buttons, headers, checked states */
-  --color-primary-light: #e4ecec;  /* pale version: checked item backgrounds */
-  --color-primary-dark: #4a5f5f;   /* hover/active state */
+  --color-primary: #c2933f;        /* main color: buttons, headers, checked states */
+  --color-primary-light: #f6ecd9;  /* pale version: checked item backgrounds */
+  --color-primary-dark: #96702c;   /* hover/active state */
   --color-warm: #7c5a3e;           /* accent: admin borders */
   --color-warm-light: #f2ebe3;     /* accent pale: admin backgrounds */
   --color-sky: #a0c3d1;            /* secondary accent */
   --color-sky-light: #e8f3f7;      /* secondary accent pale */
+  --color-ink: #17130f;            /* near-black brown — dark hero sections */
+  --color-ink-light: #241d16;      /* raised panels on dark hero sections */
   /* Also update lib/agency.ts confettiColors and swap public/logo.png */
   /* ─────────────────────────────────────────────────────────────── */
 

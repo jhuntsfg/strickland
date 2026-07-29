@@ -75,7 +75,7 @@ export default function AgentSelfPage() {
   if (notFound) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-background gap-4">
-        <Image src="/logo.png" alt={AGENCY.name} width={140} height={70} className="object-contain opacity-60" />
+        <Image src="/logo.png" alt={AGENCY.name} width={140} height={70} className="object-contain opacity-60 invert" />
         <p className="text-gray-500 text-sm">This link isn&apos;t valid. Please check with your admin.</p>
       </div>
     );

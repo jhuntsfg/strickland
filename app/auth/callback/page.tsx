@@ -64,7 +64,7 @@ export default function AuthCallbackPage() {
   if (mode === "error") {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-background gap-4">
-        <Image src="/logo.png" alt={AGENCY.name} width={140} height={70} className="object-contain opacity-60" />
+        <Image src="/logo.png" alt={AGENCY.name} width={140} height={70} className="object-contain opacity-60 invert" />
         <p className="text-gray-500 text-sm">This link has expired. Ask your admin to send a new invite.</p>
       </div>
     );
@@ -74,7 +74,7 @@ export default function AuthCallbackPage() {
     <div className="min-h-screen flex items-center justify-center bg-background">
       <div className="w-full max-w-sm">
         <div className="flex justify-center mb-8">
-          <Image src="/logo.png" alt={AGENCY.name} width={180} height={90} className="object-contain" />
+          <Image src="/logo.png" alt={AGENCY.name} width={180} height={90} className="object-contain invert" />
         </div>
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
           <h1 className="text-xl font-semibold text-center mb-1">Set your password</h1>
