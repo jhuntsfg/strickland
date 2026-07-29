@@ -3,7 +3,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import { computeAgent, ComputedAgent } from "@/lib/computed";
 import { AgentFull } from "@/lib/types";
@@ -990,33 +989,6 @@ function ImportModal({ onClose, onDone }: { onClose: () => void; onDone: () => v
   );
 }
 
-// ─── Tab nav ─────────────────────────────────────────────────────────────────
-
-function TabNav() {
-  const pathname = usePathname();
-  const isInterviews = pathname?.startsWith("/dashboard/interviews");
-  const isOnboarding = !isInterviews;
-  return (
-    <div className="flex gap-1 bg-gray-100 rounded-lg p-1">
-      <Link
-        href="/dashboard"
-        className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${
-          isOnboarding ? "bg-white text-gray-800 shadow-sm" : "text-gray-500 hover:text-gray-700"
-        }`}
-      >
-        Onboarding
-      </Link>
-      <Link
-        href="/dashboard/interviews"
-        className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${
-          isInterviews ? "bg-white text-gray-800 shadow-sm" : "text-gray-500 hover:text-gray-700"
-        }`}
-      >
-        Interviews
-      </Link>
-    </div>
-  );
-}
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 
@@ -1181,7 +1153,9 @@ export default function InterviewsPage() {
       <Sidebar agents={agents} onAddAgent={() => setShowAddAgentModal(true)} />
       <main className="flex-1 p-8">
         <div className="flex items-center justify-between mb-6">
-          <TabNav />
+          <Link href="/dashboard" className="text-sm text-gray-500 hover:text-gray-800">
+            ← Onboarding
+          </Link>
           <div className="flex gap-2">
             <button
               onClick={() => setShowImportModal(true)}
