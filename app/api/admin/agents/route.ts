@@ -21,15 +21,19 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "name and type are required" }, { status: 400 });
   }
 
-  const agent = await createAgent({
-    name,
-    upline: upline || null,
-    start_date: start_date || new Date().toISOString().slice(0, 10),
-    type,
-    phone: phone || null,
-    email: email || null,
-    state: state || null,
-  });
-
-  return NextResponse.json({ agent });
+  try {
+    const agent = await createAgent({
+      name,
+      upline: upline || null,
+      start_date: start_date || new Date().toISOString().slice(0, 10),
+      type,
+      phone: phone || null,
+      email: email || null,
+      state: state || null,
+    });
+    return NextResponse.json({ agent });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Failed to create agent";
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
 }
