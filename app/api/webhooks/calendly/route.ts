@@ -63,8 +63,15 @@ export async function POST(request: NextRequest) {
 
       console.log("Calendly invitee.created: name=", name, "email=", email, "uri=", calendly_event_uri, "scheduled_at=", scheduled_at);
 
-      // Phone: prefer text_reminder_number (SMS opt-in), fall back to any phone/number QA
+      // Phone: prefer text_reminder_number (SMS opt-in), then the invitee-provided
+      // number Calendly stores on the event location for "phone call" event types,
+      // then fall back to any phone/number QA
       let phone: string | null = (data?.text_reminder_number as string) || null;
+
+      const location = scheduledEvent?.location as Record<string, unknown> | undefined;
+      if (!phone && location && (location.type === "invitee_phone_number" || location.type === "outbound_call")) {
+        phone = (location.location as string) || null;
+      }
 
       // State from questions_and_answers (also pick up phone from QA if not already found)
       let state: string | null = null;
@@ -72,13 +79,21 @@ export async function POST(request: NextRequest) {
       if (Array.isArray(qas)) {
         for (const qa of qas) {
           const q = (qa.question ?? "").toLowerCase();
+          const answer = (qa.answer ?? "").trim() || null;
           if (!phone && (q.includes("phone") || q.includes("number") || q.includes("text") || q.includes("sms") || q.includes("cell") || q.includes("mobile"))) {
-            phone = qa.answer || null;
+            phone = answer;
           }
-          if (!state && (q.includes("state") || q.includes("reside") || q.includes("located"))) {
-            state = qa.answer ?? null;
+          if (!state && (q.includes("state") || q.includes("reside") || q.includes("location") || q.includes("located") || q.includes("province"))) {
+            state = answer;
           }
         }
+      }
+
+      if (!phone || !state) {
+        console.warn(
+          "Calendly invitee.created: missing field(s)",
+          { missingPhone: !phone, missingState: !state, location, questions_and_answers: qas }
+        );
       }
 
       // Get owner from event memberships
